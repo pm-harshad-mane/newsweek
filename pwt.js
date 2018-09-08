@@ -10129,7 +10129,8 @@ function pwtCreatePrebidNamespace(preBidNameSpace) {
         if (h.isOwnProperty(D.kgpvMap, e)) {
             if ("pubmaticServer" === t.bidderCode && (t.bidderCode = t.originalBidder),
             t.bidderCode && c.isServerSideAdapter(t.bidderCode)) {
-                var i = D.kgpvMap[e].divID
+                //var i = D.kgpvMap[e].divID
+                var i = e
                   , n = D.getPBCodeWithWidthAndHeight(i, t.bidderCode, t.width, t.height)
                   , r = D.getPBCodeWithoutWidthAndHeight(i, t.bidderCode);
                 if (h.isOwnProperty(D.kgpvMap, n))
@@ -10171,6 +10172,9 @@ function pwtCreatePrebidNamespace(preBidNameSpace) {
         c.isServerSideAdapter(t))
             return h.log("Not calling adapter: " + t + ", for " + r + ", as it is serverSideEnabled."),
             void 0;
+
+        u = g;    
+
         h.isOwnProperty(e, u) || (e[u] = {
             code: u,
             mediaType: "banner",
