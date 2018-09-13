@@ -10181,7 +10181,8 @@ function pwtCreatePrebidNamespace(preBidNameSpace) {
             /* istanbul ignore else */
             if(pbBid.bidderCode){
                 bidManager.setBidFromBidder(
-                    refThis.kgpvMap[responseID].divID,
+                    //refThis.kgpvMap[responseID].divID,
+                    divID,
                     refThis.transformPBBidToOWBid(pbBid, refThis.kgpvMap[responseID].kgpv)
                 );
             }
@@ -10367,6 +10368,7 @@ function pwtCreatePrebidNamespace(preBidNameSpace) {
         for (var a in i)
             h.isOwnProperty(i, a) && r.push(i[a]);
         if (r.length > 0 && window[E])
+            console.log("Calling Prebid with this config ", r);
             try {
                 if (h.isFunction(window[E].setConfig)) {
                     var o = {
