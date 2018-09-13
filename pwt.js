@@ -10143,7 +10143,9 @@ function pwtCreatePrebidNamespace(preBidNameSpace) {
         }else if(util.isOwnProperty(refThis.kgpvMap, temp2)){
             responseID = temp2;
         }else{
-            util.log('Failed to find kgpv details for S2S-adapter:'+ pbBid.bidderCode);
+            //util.log('Failed to find kgpv details adapter:'+ pbBid.bidderCode);
+            //util.log(pbBid);
+            console.log('Failed to find kgpv details adapter:'+ pbBid.bidderCode, pbBid);
             return;
         }
 
