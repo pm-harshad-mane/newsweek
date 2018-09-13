@@ -10125,12 +10125,76 @@ function pwtCreatePrebidNamespace(preBidNameSpace) {
         i
     }
     function r(t) {
+        var pbBid = t,
+            util = h,
+            CONFIG = c,
+            refThis = D,
+            bidManager = I
+        ;
+
+        var responseID = pbBid.adUnitCode || "";
+        var divID = responseID;
+        //var divID = refThis.kgpvMap[responseID].divID;//old
+        var temp1 = refThis.getPBCodeWithWidthAndHeight(divID, pbBid.bidderCode, pbBid.width, pbBid.height);
+        var temp2 = refThis.getPBCodeWithoutWidthAndHeight(divID, pbBid.bidderCode);
+
+        if(util.isOwnProperty(refThis.kgpvMap, temp1)){
+            responseID = temp1;
+        }else if(util.isOwnProperty(refThis.kgpvMap, temp2)){
+            responseID = temp2;
+        }else{
+            util.log('Failed to find kgpv details for S2S-adapter:'+ pbBid.bidderCode);
+            return;
+        }
+
+
+        if(util.isOwnProperty(refThis.kgpvMap, responseID)){            
+
+            /* istanbul ignore else */
+            if(pbBid.bidderCode === 'pubmaticServer'){
+                pbBid.bidderCode = pbBid.originalBidder;
+            }
+
+            /* istanbul ignore else */
+            if(pbBid.bidderCode && CONFIG.isServerSideAdapter(pbBid.bidderCode)){
+                //  we want to change the way we create prebid request adUnits,
+                //      we are using code as a key in adUnits
+                //      now we want to change key for adUnits to divID
+                //      so simply changing code = divID
+                /*
+                var divID = responseID;
+                //var divID = refThis.kgpvMap[responseID].divID;//old
+                var temp1 = refThis.getPBCodeWithWidthAndHeight(divID, pbBid.bidderCode, pbBid.width, pbBid.height);
+                var temp2 = refThis.getPBCodeWithoutWidthAndHeight(divID, pbBid.bidderCode);
+
+                if(util.isOwnProperty(refThis.kgpvMap, temp1)){
+                    responseID = temp1;
+                }else if(util.isOwnProperty(refThis.kgpvMap, temp2)){
+                    responseID = temp2;
+                }else{
+                    util.log('Failed to find kgpv details for S2S-adapter:'+ pbBid.bidderCode);
+                    return;
+                }
+                */
+            }
+
+            /* istanbul ignore else */
+            if(pbBid.bidderCode){
+                bidManager.setBidFromBidder(
+                    refThis.kgpvMap[responseID].divID,
+                    refThis.transformPBBidToOWBid(pbBid, refThis.kgpvMap[responseID].kgpv)
+                );
+            }
+        }else{
+            util.log('Failed to find pbBid.adUnitCode in kgpvMap, pbBid.adUnitCode:'+ pbBid.adUnitCode);
+        }
+
+        /*
         var e = t.adUnitCode || "";
         if (h.isOwnProperty(D.kgpvMap, e)) {
             if ("pubmaticServer" === t.bidderCode && (t.bidderCode = t.originalBidder),
             t.bidderCode && c.isServerSideAdapter(t.bidderCode)) {
-                //var i = D.kgpvMap[e].divID
-                var i = e
+                var i = D.kgpvMap[e].divID                
                   , n = D.getPBCodeWithWidthAndHeight(i, t.bidderCode, t.width, t.height)
                   , r = D.getPBCodeWithoutWidthAndHeight(i, t.bidderCode);
                 if (h.isOwnProperty(D.kgpvMap, n))
@@ -10145,6 +10209,7 @@ function pwtCreatePrebidNamespace(preBidNameSpace) {
             t.bidderCode && I.setBidFromBidder(D.kgpvMap[e].divID, D.transformPBBidToOWBid(t, D.kgpvMap[e].kgpv))
         } else
             h.log("Failed to find pbBid.adUnitCode in kgpvMap, pbBid.adUnitCode:" + t.adUnitCode)
+        */    
     }
     function a(t) {
         for (var e in t)
